@@ -1,16 +1,34 @@
+import os
 import io
 import cv2
 import numpy as np
 from typing import Optional, Union
 from pydub import AudioSegment
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from dotenv import load_dotenv, find_dotenv
+from fastapi.security import OAuth2PasswordBearer
 from fastapi.responses import JSONResponse, StreamingResponse
+from fastapi import FastAPI, UploadFile, HTTPException, Depends, Header, File, status
+
+load_dotenv(find_dotenv())
 
 app = FastAPI()
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+
+def verify_token(token: str = Depends(oauth2_scheme)):
+    if token != os.environ["MY_API_TOKEN"]:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid authentication credentials",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    return token
 
 
 @app.post("/upload/image/")
-async def process_image(file: UploadFile = File(...)):
+async def process_image(
+    file: UploadFile = File(...), token: str = Depends(verify_token)
+):
     contents = await file.read()
     np_contents = np.frombuffer(contents, np.uint8)
     image = cv2.imdecode(np_contents, cv2.IMREAD_COLOR)
@@ -24,7 +42,9 @@ async def process_image(file: UploadFile = File(...)):
 
 
 @app.post("/upload/audio/")
-async def process_audio(file: UploadFile = File(...)):
+async def process_audio(
+    file: UploadFile = File(...), token: str = Depends(verify_token)
+):
     contents = await file.read()
 
     # Determin the file format from the filename
@@ -52,7 +72,9 @@ async def process_audio(file: UploadFile = File(...)):
 
 @app.post("/upload/text/")
 async def process_text(
-    file: Optional[UploadFile] = File(None), text: Optional[str] = File(None)
+    file: Optional[UploadFile] = File(None),
+    text: Optional[str] = File(None),
+    token: str = Depends(verify_token),
 ):
     if file:
         contents = await file.read()
