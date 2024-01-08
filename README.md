@@ -78,7 +78,7 @@ Before you embark on this journey, make sure you have the following:
 
     Open link in browser
     ```
-    http://0.0.0.0:8000/docs
+    http://0.0.0.0:1000/docs
     ```
 
     Go to `Authorize` and input your **username** and **password** to get required token. <br>
