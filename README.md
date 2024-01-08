@@ -67,7 +67,7 @@ Before you embark on this journey, make sure you have the following:
     _**Note**: set different PORT number if needed._
 
     ```bash
-    docker run --rm -it -e PORT=1000 -p 127.0.0.1:8000:8000 simple-backend
+    docker run --rm -it -e PORT=1000 -p 127.0.0.1:1000:1000 simple-backend
     ```
 
 5. **Test our server**:
