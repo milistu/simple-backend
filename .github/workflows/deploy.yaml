@@ -1,0 +1,19 @@
+name: Release Reverse All API 
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - 
+                name: Render Deploy Action
+                uses: johnbeynon/render-deploy-action@v0.0.8
+                with:
+                    service-id: ${{ secrets.MY_RENDER_SERVICE_ID }}
+                    api-key: ${{ secrets.MY_RENDER_API_KEY }}
+                    wait-for-success: true
