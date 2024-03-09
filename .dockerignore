@@ -1,7 +1,8 @@
 *.ipynb
 files/
-.git
+.git*
 .env
+.venv
 .gitignore
 pyproject.toml
 poetry.lock
