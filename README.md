@@ -64,7 +64,7 @@ Before you embark on this journey, make sure you have the following:
 
 4. **Run container**:
 
-    _**Note**: set different PORT number if needed._
+    _**Note**: set different PORT if needed._
 
     ```bash
     docker run --rm -it -e PORT=1000 -p 127.0.0.1:1000:1000 simple-backend
@@ -76,16 +76,16 @@ Before you embark on this journey, make sure you have the following:
 
     **Swagger**:
 
-    Open link in browser
+    Open the link in the browser
     ```
     http://0.0.0.0:1000/docs
     ```
 
-    Go to `Authorize` and input your **username** and **password** to get required token. <br>
+    Go to `Authorize` and input your **username** and **password** to get the required token. <br>
     In our example username:
     ```
     username=johndoe
-    password=ThisPasswordIsTheBest,TrustMe!
+    password=BestPassword!
     ```
 
-    Now you can test one of end-points (eg. image, audio, text).
+    Now you can test one of the end-points (eg. image, audio, text).
